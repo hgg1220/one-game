@@ -1,0 +1,419 @@
+#undef UNICODE
+#undef _UNICODE
+#include<stdio.h>
+#include<stdlib.h>
+#include<windows.h>
+#include<graphics.h>
+#include <conio.h> 
+#pragma comment (lib,"WinMM.Lib")
+
+static int hp = 100;
+static int plot = 0;
+
+void world2(int m_x,int m_y)
+{
+	HWND hnd = GetHWnd();
+	SetWindowText(hnd, "one game 世界1 村子");
+	cleardevice();
+	while (true)
+	{
+	a:
+		IMAGE a;
+		IMAGE b;
+		IMAGE c;
+		IMAGE d;
+		IMAGE e;
+		IMAGE NPC1;
+		IMAGE NPC2;
+		setlinestyle(PS_SOLID, 5);
+		setfillcolor(YELLOW);
+		setlinecolor(BLACK);
+		settextcolor(BLACK);
+		settextstyle(30, 0, "楷体");
+		setbkmode(TRANSPARENT);
+		fillcircle(1000, 600, 50);
+		fillcircle(900, 600, 50);
+		fillcircle(1000, 500, 50);
+		fillcircle(900, 500, 50);
+		fillcircle(1000, 250, 50);
+		fillcircle(1000, 350, 50);
+		outtextxy(970, 580, "向前");
+		outtextxy(870, 580, "向后");
+		outtextxy(970, 480, "向上");
+		outtextxy(870, 480, "向下");
+		outtextxy(970, 230, "交互");
+		outtextxy(970, 330, "大厅");
+		loadimage(&c, "./石头.jpg", 100, 70);
+		putimage(700,300,&c);
+		loadimage(&d, "./花.jpg", 40, 60);
+		putimage(200, 130, &d);
+		loadimage(&e, "./线.jpg", 1080, 1);
+		putimage(0, 79, &e);
+		loadimage(&a, "./Aali.jpg", 70, 70);
+		putimage(m_x, m_y, &a);
+		loadimage(&NPC1, "./NPC1.jpg", 70, 80);
+		putimage(100, 600, &NPC1);
+		loadimage(&NPC2, "./NPC2.jpg", 70, 80);
+		putimage(800, 80, &NPC2);
+
+		if (plot == 1)
+		{
+			outtextxy(700, 1, "找大叔的老伴");
+		}
+		if (plot == 2)
+		{
+			outtextxy(700, 1, "完成");
+		}
+		EASYXMSG m = getmessage();
+		
+		if (m.message == WM_LBUTTONDOWN)
+		{
+			if (m.x >= 950 && m.x <= 1050 && m.y >= 200 && m.y <= 300)
+			{
+				if (m_x > 660 && m_x < 940 && m_y >80 && m_y < 230)
+				{
+					if (plot == 1)
+					{
+					npc2:
+						outtextxy(0,1,"我就是他老伴,请你帮我找到我的DOG:)");
+						EASYXMSG A = getmessage();
+						if (A.message == WM_LBUTTONDOWN)
+						{
+								goto a;
+								plot += 1;
+								cleardevice();
+						}
+						goto npc2;
+					}
+				}
+			}
+			//回大厅
+			if (m.x >= 950 && m.x <= 1050 && m.y >= 300 && m.y <= 400)
+			{
+				break;
+			}
+			//NPC无法穿过建模
+			if (m_x > 30 && m_x < 170 && m_y >520 && m_y < 680)
+			{
+				m_x = 100;
+				m_y = 520;
+				cleardevice();
+			}
+			//NPC无法穿过建模
+			if (m_x > 730 && m_x < 870 && m_y >10 && m_y < 160)
+			{
+				m_x = 800;
+				m_y = 160;
+				cleardevice();
+			}
+			//前移动
+			if (m.x >= 950 && m.x <= 1050 && m.y >= 550 && m.y <= 650)
+			{
+				if (m_x <= 750)
+				{
+					m_x += 20;
+					cleardevice();
+					
+				}
+			}
+			//后移动
+			if (m.x >= 850 && m.x <= 950 && m.y >= 550 && m.y <= 650)
+			{
+				if (m_x != 0)
+				{
+					m_x -= 20;
+					cleardevice();
+				}
+			}
+			//下移动
+			if (m.x >= 850 && m.x <= 950 && m.y >= 450 && m.y <= 550)
+				if (m.x >= 850)
+				{
+					if (m_y != 700)
+					{
+						m_y += 20;
+						cleardevice();
+					}
+					if (m_y > 650)
+					{
+						m_y = 650;
+						cleardevice();
+					}
+				}
+			//上移动
+			if (m.x >= 950 && m.x <= 1050 && m.y >= 450 && m.y <= 550)
+			{
+				if (m_y > 80)
+				{
+					m_y -= 20;
+					cleardevice();
+				}
+				if (m_y <= 80)
+				{
+					m_y = 80;
+					cleardevice();
+				}
+			}
+			//对话：NPC1
+			if (m.x >= 950 && m.x <= 1050 && m.y >= 200 && m.y <= 300)
+			{
+				if (m_x >= 30 && m_x <= 170 && m_y >= 520 && m_y <= 680)
+				{
+				b:
+					outtextxy(0,1,"Hello!");
+					setlinestyle(PS_SOLID, 5);
+					setfillcolor(YELLOW);
+					setlinecolor(BLACK);
+					settextcolor(BLACK);
+					settextstyle(30, 0, "楷体");
+					setbkmode(TRANSPARENT);
+					fillcircle(1000, 600, 50);
+					fillcircle(900, 600, 50);
+					fillcircle(1000, 500, 50);
+					fillcircle(900, 500, 50);
+					fillcircle(1000, 250, 50);
+					outtextxy(970, 580, "向前");
+					outtextxy(870, 580, "向后");
+					outtextxy(970, 480, "向上");
+					outtextxy(870, 480, "向下");
+					outtextxy(970, 230, "交互");
+					loadimage(&c, "./石头.jpg", 100, 70);
+					putimage(700, 300, &c);
+					loadimage(&d, "./花.jpg", 40, 60);
+					putimage(200, 130, &d);
+					loadimage(&e, "./线.jpg", 1080, 1);
+					putimage(0, 79, &e);
+					loadimage(&a, "./Aali.jpg", 70, 70);
+					putimage(m_x, m_y, &a);
+					loadimage(&NPC1, "./NPC1.jpg", 70, 80);
+					putimage(100, 600, &NPC1);
+					loadimage(&NPC2, "./NPC2.jpg", 70, 80);
+					putimage(800, 80, &NPC2);
+					EASYXMSG ms = getmessage();
+					if (ms.message == WM_LBUTTONDOWN)
+					{
+							outtextxy(200,1, "请你去找我的老伴(对话已结束)");
+							//剧情加1
+							plot += 1;
+							goto a;
+					}
+					goto b;
+				}
+			}
+		}
+	}
+}
+
+int main(void)
+{
+	int t = 0;
+	t = true;
+	IMAGE a;
+	IMAGE b;
+	IMAGE c;
+	static int m_x = 0;
+	static int m_y = 80;
+	initgraph(1080,720,NOCLOSE);
+	setbkcolor(WHITE);
+	cleardevice();
+
+	while (true)
+	{
+	a:
+		HWND hnd = GetHWnd();
+		SetWindowText(hnd, "one game 大厅");
+		if (hp == 100)
+		{
+
+
+		}
+		setlinestyle(PS_SOLID, 5);
+		setfillcolor(YELLOW);
+		setlinecolor(BLACK);
+		settextcolor(BLACK);
+		settextstyle(30, 0, "楷体");
+		setbkmode(TRANSPARENT);
+		fillcircle(1000, 600, 50);
+		fillcircle(900,600,50);
+		fillcircle(1000, 500, 50);
+		fillcircle(900, 500, 50);
+		fillcircle(1000, 250, 50);
+		fillcircle(1000, 350, 50);
+		fillcircle(900, 350, 50);
+		outtextxy(970, 580, "向前");
+		outtextxy(870, 580, "向后");
+		outtextxy(970, 480, "向上");
+		outtextxy(870, 480, "向下");
+		outtextxy(970, 230, "交互");
+		outtextxy(970, 330, "退出");
+		outtextxy(870, 330, "音乐");
+		loadimage(&a, "./Aali.jpg", 70, 70);
+		putimage(m_x, m_y, &a);
+		loadimage(&b, "./树.jpg", 70, 70);
+		putimage(300, 500, &b);
+		loadimage(&c, "./线.jpg", 1080, 1);
+		putimage(0, 79, &c);
+
+		EASYXMSG msg = getmessage();
+
+		if (msg.message == WM_LBUTTONDOWN)
+		{
+			//退出
+			if (msg.x >= 950 && msg.x <= 1050 && msg.y >= 300 && msg.y <= 400)
+			{
+				HWND hn = GetHWnd();
+				SetWindowText(hn, "one game 退出");
+				IMAGE logo;
+				cleardevice();
+				settextstyle(50,0,"楷体");
+				outtextxy(440,0,"开发者");
+				settextstyle(42, 0, "楷体");
+				outtextxy(450,100,"呵戈鸽");
+				settextstyle(30, 0, "楷体");
+				outtextxy(390, 190, " UID：1386360252");
+				loadimage(&logo,"./my-logo.ico",90,90);
+				putimage(470,260,&logo);
+				settextstyle(50, 0, "楷体");
+				outtextxy(410, 400, "特别感谢");
+				settextstyle(30, 0, "楷体");
+				outtextxy(430,470,"小聋瞎jason");
+				outtextxy(410, 540, "UID：1306084387");
+
+				Sleep(4630);
+				break;
+			}
+			//音乐
+			if (msg.x >= 850 && msg.x <= 950 && msg.y >= 300 && msg.y <= 400)
+			{
+				PlaySound("./按钮音效.wav", NULL,0);
+				if (t == 0)
+				{
+					PlaySound("./你被骗了.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 1)
+				{
+					PlaySound("./电摇嘲讽.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 2)
+				{
+					PlaySound("./电摇澎湖湾.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 3)
+				{
+					PlaySound("./鸡你太美.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 4)
+				{
+					PlaySound("./114514.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 5)
+				{
+					PlaySound("./beliver.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = t + 1;
+					goto a;
+				}
+				if (t == 6)
+				{
+					PlaySound("./shape of you.wav", NULL, SND_ASYNC | SND_LOOP | SND_NODEFAULT);
+					t = 0;
+					goto a;
+				}
+			}
+			//前移动
+			if (msg.x >= 950 && msg.x <= 1050 && msg.y >= 550 && msg.y <= 650 )
+			{
+				if (m_x <= 750)
+				{
+					m_x += 20;
+					cleardevice();
+				}
+			}
+			//后移动
+			if (msg.x >= 850 && msg.x <= 950 && msg.y >= 550 && msg.y <= 650)
+			{
+				if (m_x != 0 )
+				{
+					m_x -= 20;
+					cleardevice();
+				}
+			}
+			//下移动
+			if(msg.x >= 850 && msg.x <= 950 && msg.y >= 450 && msg.y <= 550)
+			if (msg.x >= 850)
+			{
+				if (m_y <= 650)
+				{
+					m_y += 20;
+					cleardevice();
+				}
+				if (m_y > 650)
+				{
+					m_y = 650;
+					cleardevice();
+				}
+			}
+			//上移动
+			if (msg.x >= 950 && msg.x <= 1050 && msg.y >= 450 && msg.y <= 550)
+			{
+				if (m_y > 80)
+				{
+					
+					m_y -= 20;
+					cleardevice();
+				}
+				if(m_y <=80)
+				{
+					m_y = 80;
+					cleardevice();
+				}
+			}
+			//穿越
+			if (msg.x >= 950 && msg.x <= 1050 && msg.y >= 200 && msg.y <= 300)
+			{
+				if (m_x >= 230 && m_x <= 370 && m_y >= 430 && m_y <= 570)
+				{
+					COLORREF an = RGB(10, 0, 85);
+					setbkcolor(an);
+					cleardevice();
+					loadimage(&a, "Aali.jpg", 70, 70);
+					putimage(470, 290, &a);
+					Sleep(700);
+					cleardevice();
+					setbkcolor(GREEN);
+					cleardevice();
+					putimage(300, 500, &b);
+					putimage(m_x, m_y, &a);
+
+					world2(m_x,m_y);
+					if (msg.x >= 950 && msg.x <= 1050 && msg.y >= 200 && msg.y <= 300)
+					{
+						if (m_x >= 230 && m_x <= 370 && m_y >= 430 && m_y <= 570)
+						{
+							COLORREF an = RGB(10, 0, 85);
+							setbkcolor(an);
+							cleardevice();
+							loadimage(&a, "./Aali.jpg", 70, 70);
+							putimage(470, 290, &a);
+							Sleep(700);
+							cleardevice();
+							setbkcolor(WHITE);
+							cleardevice();
+							goto a;
+
+						}
+					}
+				}
+			}
+		}
+	}
+}
